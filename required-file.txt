@@ -1,0 +1,29 @@
+--------------------------
+course
+--------------------------
+https://wedevs.academy/laravel-development/
+
+https://github.com/mastering-react/react-fundamentals/tree/feat/context
+
+
+////Bkash info
+BKASH_APP_KEY="4f6o0cjiki2rfm34kfdadl1eqq"
+BKASH_APP_SECRET="2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b"
+BKASH_USERNAME="sandboxTokenizedUser02"
+BKASH_PASSWORD="sandboxTokenizedUser02@12345"
+
+Drive-https://drive.google.com/drive/folders/1EorD2Te93paLlMPGcB2qieGjcCTkkGle
+https://drive.google.com/drive/folders/1EI0zWbOWCXYcP4MGsh7GcvatKeT3GO_0
+
+https://dour-quicksand-e33.notion.site/TypeScript-Fundamentals-dcddcf7312564ba6b499158e2509b418
+exam result
+https://dour-quicksand-e33.notion.site/Typescript-Fundamentals-14ea1b2af270801c81c6c94aad4adb97
+
+https://github.com/smshahriar10/admin-react,
+color: https://maketintsandshades.com/#dddddd
+ecommerce site: https://react.getadmintoolkit.com/dashboard/ecommerce
+
+https://docs.google.com/spreadsheets/d/1FmQJhrhGWfTj8twdmsPhWxAh1_Zdl_G8joG6F5oZL-U/edit?gid=0#gid=0
+
+Assignment:https://dour-quicksand-e33.notion.site/Mastering-React-152a1b2af27080b6b9bedb242694d1d7
+https://www.figma.com/design/FlDITAcNSm79VYuhdlGWas/Type-Meter?node-id=0-1&p=f
