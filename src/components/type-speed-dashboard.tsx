@@ -27,7 +27,7 @@ function TypeSpeed() {
   }
 
   const [value,setValue] = useState("");
-  const [duration,setDuration] = useState(30);
+  const [duration,setDuration] = useState(10);
   const [remaining,setRemaining] = useState(duration);
   const [content,setContent] = useState(randomParagraph(100));
   const [isTestRunning,setTestRunning] = useState(false);
@@ -46,45 +46,56 @@ function TypeSpeed() {
       accuracy: 0,
       errors: 0,
     });
-
+   
     intervalRef.current = setInterval(() => {
       setRemaining((prev)=>{
         if(prev===0){
-          resetTest();
+          clearInterval(intervalRef.current!);
+          setTestRunning(false);
+
+          setValue((prevValue) => {
+            calculateStats(prevValue);
+            return prevValue;
+          });
+          setContent(randomParagraph(100));
+          setValue("");
           return 0;
         }
         return prev-1;
       });
+      
     },1000);
   }
 
   const resetTest = () => {
+    
     if(intervalRef.current){
       clearInterval(intervalRef.current);
     }
-    calculateStats();
+    calculateStats(value);
     setTestRunning(false);
     setContent(randomParagraph(100));
     setValue("");
+    
   }
-  const calculateStats = () => {
-    let words=value.trim().split(" ").length; 
-    let characters = value.length;
-
+  const calculateStats = (getValue:string) => {
+    let words=getValue.trim().split(" ").length; 
+    let characters = getValue.length;
+    
     let timeSpent = (duration-remaining) / 60;
-
-    let wpm = Math.round(words / timeSpent);
-    let cpm = Math.round(characters / timeSpent);
+    if (timeSpent <= 0) timeSpent = 1; 
+    let wpm = characters>0?Math.round(words / timeSpent):0;
+    let cpm = characters>0?Math.round(characters / timeSpent):0;
 
     let errors = 0;
-    let minLength = Math.min(content.length,value.length);
+    let minLength = Math.min(content.length,getValue.length);
     for (let i = 0; i < minLength; i++) {
-      if (content[i] !== value[i]) {
+      if (content[i] !== getValue[i]) {
         errors++;
       }
     }
 
-    let accuracy = Math.round(((characters - errors) / characters) * 100);
+    let accuracy = characters>0?Math.round(((characters - errors) / characters) * 100):0;
     setStats({wpm,cpm,accuracy,errors});
   }
   const formatDuration=(duration:number) => {
@@ -121,7 +132,7 @@ function TypeSpeed() {
                       <Select.Value placeholder="Select" />
                     </Select.Trigger>
                     <Select.Content className="p-2">
-                      <Select.Item value="30">30 seconds</Select.Item>
+                      <Select.Item value="10">30 seconds</Select.Item>
                       <Select.Item value="60">1 Minute</Select.Item>
                       <Select.Item value="120">2 Minutes</Select.Item>
                     </Select.Content>
