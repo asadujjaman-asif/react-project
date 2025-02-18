@@ -27,19 +27,20 @@ function TypeSpeed() {
   }
 
   const [value,setValue] = useState("");
-  const [duration,setDuration] = useState(10);
+  const [duration,setDuration] = useState(30);
   const [remaining,setRemaining] = useState(duration);
+  const [enable,setEnable] = useState(false);
   const [content,setContent] = useState(randomParagraph(100));
   const [isTestRunning,setTestRunning] = useState(false);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [stats,setStats] = useState({wpm:0,cpm:0,accuracy:0,errors:0});
-  
-  const startTest = () => {
 
+  const handleTyping = (text:string) => {
+    setValue(text);
     setTestRunning(true);
+    if(text.length<2){
     setRemaining(duration);
-
     setStats({
       wpm: 0,
       cpm: 0,
@@ -65,6 +66,13 @@ function TypeSpeed() {
       });
       
     },1000);
+    }
+  }
+  const startTest = () => {
+    //setTestRunning(true);
+    setEnable(true);
+  
+    
   }
 
   const resetTest = () => {
@@ -75,9 +83,11 @@ function TypeSpeed() {
     calculateStats(value);
     setTestRunning(false);
     setContent(randomParagraph(100));
+    setEnable(false);
     setValue("");
     
   }
+ 
   const calculateStats = (getValue:string) => {
     let words=getValue.trim().split(" ").length; 
     let characters = getValue.length;
@@ -116,10 +126,6 @@ function TypeSpeed() {
       );
     });  
   };
-
- 
-  
-
   return (
     <>
       <main className='h-screen flex items-center justify-center  p-6'>
@@ -132,7 +138,7 @@ function TypeSpeed() {
                       <Select.Value placeholder="Select" />
                     </Select.Trigger>
                     <Select.Content className="p-2">
-                      <Select.Item value="10">30 seconds</Select.Item>
+                      <Select.Item value="30">30 seconds</Select.Item>
                       <Select.Item value="60">1 Minute</Select.Item>
                       <Select.Item value="120">2 Minutes</Select.Item>
                     </Select.Content>
@@ -154,9 +160,10 @@ function TypeSpeed() {
                 className="mt-4"
                 rows={4}
                 placeholder="Type to begin the test"
-                disabled={!isTestRunning}
+                disabled={!enable}
                 value={value}
-                onChange={(env:any) =>setValue(env.target.value)}
+               // onChange={(env:any) =>setValue(env.target.value)}
+               onChange={(env:any) =>handleTyping(env.target.value)}
               />
              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>
               <SummaryCard value={stats.wpm.toString()} unit ="WPM" />
