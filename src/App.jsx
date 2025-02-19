@@ -1,15 +1,19 @@
 import { useState,Suspense } from 'react'
 import './App.css'
-import BasicFetching from './components/basic-fetching'
 import FetchUse from './components/fetch-use'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
 
 function App() {
 
   return (
     <>
-    <Suspense fallback={<div>Loading...</div>} > 
-      <FetchUse />
-    </Suspense>
+      <QueryClientProvider client={queryClient}>
+       {/**  <Suspense fallback={<div>Loading...</div>} > */}
+          <FetchUse />
+          {/** </Suspense>*/}
+      </QueryClientProvider>
     </>
   )
 }
