@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useState,Suspense } from 'react'
 import './App.css'
 import BasicFetching from './components/basic-fetching'
+import FetchUse from './components/fetch-use'
 
 function App() {
 
   return (
     <>
-      <BasicFetching />
+    <Suspense fallback={<div>Loading...</div>} > 
+      <FetchUse />
+    </Suspense>
     </>
   )
 }
