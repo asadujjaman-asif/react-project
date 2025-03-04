@@ -2,6 +2,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import React, { Suspense, use } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type Product = {
   id:number;
@@ -17,8 +18,19 @@ type Product = {
 };
 
 const BasicFetching = () => {
-  
- const goToNextPage=() =>{
+
+  const [account,setAccount] = useState(false);
+  const [cartList,setCartList] = useState(false);
+ const handleAccount=()=>{
+    cartList?setCartList(false):"";
+    setAccount((prev)=>!prev);
+ } 
+ const handleCartList=()=>{
+  account?setAccount(false):"";
+  setCartList((prev)=>!prev);
+} 
+ 
+  const goToNextPage=() =>{
   setPage((prevPage) =>prevPage+1)
  }
  const goTOPrevPage=() =>{
@@ -38,7 +50,7 @@ const BasicFetching = () => {
   },
   placeholderData: keepPreviousData,
  });
- console.log(products);
+
 if(isLoading){
   return <div>Loading...</div>
 }
@@ -151,7 +163,7 @@ if(isLoading){
                       </form>
                   </div>
                   <div className='flex items-center justify-end w-full space-x-4'>
-                      <div className='items-center hidden pr-1  md:flex'>
+                      <div className="items-center pr-1 hidden md:flex">
                         <div className='mr-3 flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-300 bg-gray-200 dark:bg-gray-200 text-dark dark:text-white'>
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                             <path d="M20.6937 18.975L20.075 12.7531C19.9719 11.6187 19.0094 10.7594 17.875 10.7594H4.125C2.99062 10.7594 2.0625 11.6187 1.925 12.7531L1.30625 18.975C1.2375 19.5937 1.44375 20.2125 1.85625 20.6594C2.26875 21.1062 2.85312 21.3812 3.47187 21.3812H18.4594C19.0781 21.3812 19.6625 21.1062 20.075 20.6594C20.5562 20.2125 20.7281 19.5937 20.6937 18.975ZM18.975 19.6281C18.8375 19.7656 18.6656 19.8344 18.4937 19.8344H3.50625C3.33437 19.8344 3.1625 19.7656 3.025 19.6281C2.8875 19.4906 2.85312 19.3187 2.85312 19.1125L3.47187 12.8906C3.50625 12.5469 3.78125 12.3062 4.125 12.3062H17.875C18.2187 12.3062 18.4937 12.5469 18.5281 12.8906L19.1469 19.1125C19.1469 19.3187 19.1125 19.4906 18.975 19.6281Z"/>
@@ -177,7 +189,7 @@ if(isLoading){
                       </div>
                       <div className='relative z-20'>
                         <div className='flex max-w-[200px] justify-end'>
-                          <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white">
+                          <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white" onClick={()=>handleAccount()}>
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                               <path d="M11 20.2812C10.5531 20.2812 10.1062 20.1094 9.7625 19.8C8.97187 19.1125 8.24999 18.4937 7.59687 17.9438C5.63749 16.2594 3.91874 14.85 2.71562 13.4062C1.30624 11.6875 0.618744 10.0719 0.618744 8.25C0.618744 6.49687 1.23749 4.84688 2.33749 3.64375C3.47187 2.40625 5.05312 1.71875 6.73749 1.71875C8.00937 1.71875 9.21249 2.13125 10.2437 2.92188C10.5187 3.12812 10.7594 3.33438 11 3.60938C11.2406 3.36875 11.4812 3.12812 11.7562 2.92188C12.7875 2.13125 13.9562 1.71875 15.2625 1.71875C16.9812 1.71875 18.5281 2.40625 19.6625 3.64375C20.7969 4.84688 21.3812 6.49687 21.3812 8.25C21.3812 10.0719 20.7281 11.6875 19.2844 13.4062C18.0812 14.85 16.3625 16.2937 14.4031 17.9438C13.75 18.4937 12.9937 19.1469 12.2031 19.8C11.8937 20.1094 11.4469 20.2812 11 20.2812ZM6.73749 3.26562C5.46562 3.26562 4.29687 3.78125 3.43749 4.675C2.61249 5.60313 2.16562 6.875 2.16562 8.25C2.16562 9.65938 2.71562 11 3.88437 12.4094C5.01874 13.75 6.66874 15.1594 8.55937 16.775C9.21249 17.325 9.96874 17.9781 10.7594 18.6656C10.8969 18.7687 11.1031 18.7687 11.2406 18.6656C12.0312 17.9781 12.7875 17.3594 13.4406 16.775C15.3656 15.125 17.0156 13.75 18.1156 12.4094C19.2844 11 19.8344 9.65938 19.8344 8.25C19.8344 6.875 19.3531 5.60312 18.5281 4.70937C17.6687 3.78125 16.5 3.26562 15.2625 3.26562C14.3344 3.26562 13.475 3.575 12.7187 4.125C12.4094 4.36562 12.1344 4.64062 11.8594 4.95C11.6531 5.19062 11.3437 5.3625 11 5.3625C10.6562 5.3625 10.3812 5.225 10.1406 4.95C9.86562 4.64062 9.59062 4.36562 9.28125 4.125C8.55937 3.575 7.7 3.26562 6.73749 3.26562Z"/>
                             </svg>
@@ -187,7 +199,7 @@ if(isLoading){
                               </span>
                             </button>
                         </div>
-                        <div className="absolute top-full right-0 mt-5 w-[330px]">
+                        <div className={twMerge("absolute top-full right-0 mt-5 w-[330px]",account?"":"hidden")}>
                           <div className="px-6 py-8 overflow-hidden bg-white border rounded-lg border-stroke dark:border-dark-3 dark:bg-dark-2 shadow-1 dark:shadow-box-dark">
                             <div className="pb-3 border-b border-stroke dark:border-dark-3">
                               <div className="flex items-center justify-between pb-4 -mx-1">
@@ -268,9 +280,7 @@ if(isLoading){
                       </div>
                       <div className="relative z-20">
                         <div className="flex max-w-[200px] justify-end">
-                          <button
-                            class="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white"
-                          >
+                          <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white" onClick = {()=>handleCartList()}>
                             <svg
                               width="22"
                               height="22"
@@ -291,7 +301,7 @@ if(isLoading){
                             </span>
                           </button>
                         </div>
-                        <div className="absolute top-full right-0 mt-5 w-[330px]">
+                        <div className={twMerge("absolute top-full right-0 mt-5 w-[330px]",cartList?"":"hidden")}>
                           <div className="p-8 overflow-hidden bg-white rounded-lg dark:bg-dark-2 shadow-1 dark:shadow-box-dark">
                             <div className="pb-3 mb-5 border-b border-stroke dark:border-dark-3">
                               <div className="flex items-center justify-between pb-4 -mx-1">
@@ -340,7 +350,7 @@ if(isLoading){
                                       Black T-shirt
                                     </a>
                                     <p
-                                      class="text-xs font-medium truncate text-body-color dark:text-dark-6"
+                                      className="text-xs font-medium truncate text-body-color dark:text-dark-6"
                                     >
                                       It's a nice black t-shirt
                                     </p>
@@ -416,36 +426,85 @@ if(isLoading){
               </div>
             </div>
         </div>
+        <nav className='border-b right-4 top-full w-full justify-center bg-white py-5 px-6 '>
+          <ul className='flex items-center'>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Shirt's</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Pant's</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>T-Shirt's</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Panjabi</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Pajama</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Cap's/Hats</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Glasses</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Watch's</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Shoes</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Winter</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Summer</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Joggers</a>
+            </li>
+            <li className=''>
+              <a className='flex justify-between text-base font-medium text-gray-400 hover:text-primary-500 lg:mx-4 lg:inline-flex lg:py-1' href=''>Sneakers</a>
+            </li>
+          </ul>
+        </nav>
       </header>
-      <div className='h-screen w-full py-20 flex justify-center'>
-        
-        <div className='w-full max-w-5xl px-6'>
-          <h1 className="text-2xl font-bold mb-5"></h1>
-          <div className="grid grid-cols-3 gap-4">
-                
-            { products?.map((product:Product ) => (
-              <div key = {product.id} className='bg-gray-100 p-5 rounded-lg'>
-                <img src={product.images[0]!=""?product.images[0]:product.images[1]} className="w-full h-40 object-cover" alt={product.title} />
-                <h2 className="text-base font-semibold mt-2">
-                {product.title} 
-                </h2>
-                <div className='flex items-center justify-between mt-2'>
-                  <p className="text-lg font-semibold mt-2">
-                    ${product.price} 
-                  </p>
-                  <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 mt-2 rounded hover:bg-emerald-600">Add to cart</button>
-                </div>
-                
-              </div>
-            ))}
+      <main className="flex relative">
+        <div className='h-screen w-full flex justify-center'>
           
-          </div>
-          <div className="flex items-center justify-center gap-2 py-5 w-full">
-              <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 rounded hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!hasPreviousPage} onClick={goTOPrevPage}>Prev</button>
-              <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 rounded hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!hasNextPage} onClick={goToNextPage}>Next</button>
+          <div className='w-full max-w-5xl px-6'>
+            <div className="py-3 rounded-md mt-2 mb-2 items-center">
+              <p className='font-bold'>Featured Products</p>
+              <p className='text-sm'>Check & Get Your Desired Product!</p>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+                  
+              { products?.map((product:Product ) => (
+                <div key = {product.id} className='bg-gray-100 p-5 rounded-lg'>
+                  <img src={product.images[0]!=""?product.images[0]:product.images[1]} className="w-full h-40 object-cover" alt={product.title} />
+                  <h2 className="text-base font-semibold mt-2">
+                  {product.title} 
+                  </h2>
+                  <div className='flex items-center justify-between mt-2'>
+                    <p className="text-lg font-semibold mt-2">
+                      ${product.price} 
+                    </p>
+                    <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 mt-2 rounded hover:bg-emerald-600">Add to cart</button>
+                  </div>
+                  
+                </div>
+              ))}
+            
+            </div>
+            <div className="flex items-center justify-center gap-2 py-5 w-full">
+                <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 rounded hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!hasPreviousPage} onClick={goTOPrevPage}>Prev</button>
+                <button className="bg-emerald-500 text-sm text-emerald-50 px-4 py-2 rounded hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!hasNextPage} onClick={goToNextPage}>Next</button>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
+      
     </>
   )
 }
