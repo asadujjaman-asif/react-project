@@ -1,6 +1,6 @@
 import { useState,Suspense } from 'react'
 import './App.css'
-import FetchUse from './components/data-fetching-pagination'
+import FetchUse from './components/infinity-data-fetching'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient();
