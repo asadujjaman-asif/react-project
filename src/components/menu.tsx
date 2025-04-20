@@ -1,0 +1,15 @@
+export default [
+    {id:1,title:"Shirt's",slug:'shirts'},
+    {id:2,title:"Pant's",slug:'pants'},
+    {id:3,title:"T-Shirt's",slug:'t-shirts'},
+    {id:4,title:"Panjabi",slug:'panjabi'},
+    {id:5,title:"Pajama",slug:'pajama'},
+    {id:6,title:"Cap's/Hats",slug:'caps-hats'},
+    {id:7,title:"Glasses",slug:'glasses'},
+    {id:8,title:"Watch's",slug:'watch'},
+    {id:9,title:"Shoes",slug:'shoes'},
+    {id:10,title:"Winter",slug:'winter'},
+    {id:11,title:"Summer",slug:'summer'},
+    {id:12,title:"Joggers",slug:'joggers'},
+    {id:13,title:"Sneakers",slug:'sneakers'},
+];

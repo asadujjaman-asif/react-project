@@ -1,20 +1,43 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { Suspense, use } from 'react'
+import React, {FC, Suspense, use } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { useSearch } from '../context/search-context';
+import logoPrimary from '../assets/logo-primary.svg';
+import CartList from "../components/cartList"
+import { CartItem, Products } from '../type';
 
-const SearchBar:React.FC = () => {
+type CartSummaryProps = {
+    cartItems: CartItem[];
+    updateQuantity: (id: number, quantity: number) => void;
+    removeFromCart: (id: number) => void;
+    calculateTotal: () => number;
+  };
+  
+const SearchBar:FC<CartSummaryProps>  = ({
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+    calculateTotal,
+  }) => {
+    const { setSearchKeyWord } = useSearch(); 
     const [account,setAccount] = useState(false);
     const [cartList,setCartList] = useState(false);
+    const [searchItem,setSearchItem] = useState('');
     const handleAccount=()=>{
         cartList?setCartList(false):"";
         setAccount((prev)=>!prev);
      } 
-     const handleCartList=()=>{
+    const handleCartList=()=>{
       account?setAccount(false):"";
       setCartList((prev)=>!prev);
     } 
+
+    const handleSearchChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setSearchItem(e.target.value);
+        setSearchKeyWord(e.target.value);
+    }
      
   return (
     <>
@@ -22,16 +45,8 @@ const SearchBar:React.FC = () => {
             <div className='relative flex items-center justify-center sm:justify-between'>
             <div className='w-48 max-w-full px-4 sm:w-60 lg:w-48'>
             <a href="javascript:void(0)" className="block w-full py-5 lg:py-3">
-                <img
-                src="src/assets/logo-primary.svg"
-                alt="logo"
-                className="w-full dark:hidden"
-                />
-                <img
-                src="src/assets/logo-white.svg"
-                alt="logo"
-                className="hidden w-full dark:block"
-                />
+                <img src={logoPrimary} alt="logo" className="w-full dark:hidden" />
+                <img src={logoPrimary} alt="logo" className="hidden w-full dark:block" />
             </a>
             </div>
             <div className='items-center justify-end hidden w-full px-4 sm:flex lg:justify-between'>
@@ -39,9 +54,9 @@ const SearchBar:React.FC = () => {
                     <form className='flex relative items-center w-full border rounded-md border-stroke dark:border-dark-3 bg-gray-100 dark:bg-dark-200'>
                     <div className='relative border-r border-stroke dark:border-dark-300'>
                         <select className="appearance-none bg-transparent pr-10 pl-[22px] py-[14px] text-base font-medium text-dark dark:text-white outline-none cursor-pointer">
-                        <option className="dark:bg-dark-200">All categories</option>
-                        <option className="dark:bg-dark-200">Best matches</option>
-                        <option className="dark:bg-dark-200">Newest</option>
+                            <option className="dark:bg-dark-200">All categories</option>
+                            <option className="dark:bg-dark-200">Best matches</option>
+                            <option className="dark:bg-dark-200">Newest</option>
                         </select>
                         <span className="absolute -translate-y-1/2 right-4 top-1/2 text-dark dark:text-white">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
@@ -49,7 +64,13 @@ const SearchBar:React.FC = () => {
                         </svg>
                         </span>
                     </div>
-                    <input type="text" className='w-full bg-transparent py-3  pl-6 pr-[58px] text-base text-body-color dark:text-dark-600 outline-none' placeholder="I'm shopping for..."/>
+                    <input 
+                        type="text" 
+                        className='w-full bg-transparent py-3  pl-6 pr-[58px] text-base text-body-color dark:text-dark-600 outline-none'
+                        placeholder="I'm shopping for..."
+                        value={searchItem}
+                        onChange={handleSearchChange}
+                        />
                     <button className='absolute top-0 right-0 flex h-full w-[52px] items-center justify-center rounded-tr-md rounded-br-md border border-primary bg-primary-500 text-white'>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                         <path d="M23.025 20.8875L16.8375 15.8625C19.3875 12.375 19.125 7.3875 15.9375 4.2375C14.25 2.55 12 1.6125 9.6 1.6125C7.2 1.6125 4.95 2.55 3.2625 4.2375C-0.225 7.725 -0.225 13.425 3.2625 16.9125C4.95 18.6 7.2 19.5375 9.6 19.5375C11.8875 19.5375 14.025 18.675 15.7125 17.1375L21.975 22.2C22.125 22.3125 22.3125 22.3875 22.5 22.3875C22.7625 22.3875 22.9875 22.275 23.1375 22.0875C23.4375 21.7125 23.4 21.1875 23.025 20.8875ZM9.6 17.85C7.65 17.85 5.85 17.1 4.4625 15.7125C1.6125 12.8625 1.6125 8.25 4.4625 5.4375C5.85 4.05 7.65 3.3 9.6 3.3C11.55 3.3 13.35 4.05 14.7375 5.4375C17.5875 8.2875 17.5875 12.9 14.7375 15.7125C13.3875 17.1 11.55 17.85 9.6 17.85Z"/>
@@ -59,7 +80,7 @@ const SearchBar:React.FC = () => {
                 </div>
                 <div className='flex items-center justify-end w-full space-x-4'>
                     <div className="items-center pr-1 hidden md:flex">
-                    <div className='mr-3 flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-300 bg-gray-200 dark:bg-gray-200 text-dark dark:text-white'>
+                    <div className='mr-3 flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-300 bg-primary-500 text-dark dark:text-white'>
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                         <path d="M20.6937 18.975L20.075 12.7531C19.9719 11.6187 19.0094 10.7594 17.875 10.7594H4.125C2.99062 10.7594 2.0625 11.6187 1.925 12.7531L1.30625 18.975C1.2375 19.5937 1.44375 20.2125 1.85625 20.6594C2.26875 21.1062 2.85312 21.3812 3.47187 21.3812H18.4594C19.0781 21.3812 19.6625 21.1062 20.075 20.6594C20.5562 20.2125 20.7281 19.5937 20.6937 18.975ZM18.975 19.6281C18.8375 19.7656 18.6656 19.8344 18.4937 19.8344H3.50625C3.33437 19.8344 3.1625 19.7656 3.025 19.6281C2.8875 19.4906 2.85312 19.3187 2.85312 19.1125L3.47187 12.8906C3.50625 12.5469 3.78125 12.3062 4.125 12.3062H17.875C18.2187 12.3062 18.4937 12.5469 18.5281 12.8906L19.1469 19.1125C19.1469 19.3187 19.1125 19.4906 18.975 19.6281Z"/>
                         <path d="M11 13.5094C9.59063 13.5094 8.42188 14.6781 8.42188 16.0875C8.42188 17.5312 9.59063 18.6656 11 18.6656C12.4437 18.6656 13.5781 17.4969 13.5781 16.0875C13.5781 14.6781 12.4437 13.5094 11 13.5094ZM11 17.1187C10.4156 17.1187 9.96875 16.6375 9.96875 16.0875C9.96875 15.5031 10.45 15.0562 11 15.0562C11.5844 15.0562 12.0312 15.5375 12.0312 16.0875C12.0312 16.6719 11.5844 17.1187 11 17.1187Z"/>
@@ -67,7 +88,7 @@ const SearchBar:React.FC = () => {
                         </svg>
                     </div>
                     <div>
-                    <p className="text-sm font-medium text-dark dark:text-white">
+                    <p className="text-sm font-medium text-dark">
                         Need Help?
                         <br />
                         +088 123 456 789
@@ -75,7 +96,7 @@ const SearchBar:React.FC = () => {
                     </div>
                     </div>
                     <div>
-                    <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-300 bg-gray-200 dark:bg-dark-200 text-dark dark:text-white">
+                    <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-300 bg-primary-500 text-dark dark:text-white">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                         <path d="M11 9.62499C8.42188 9.62499 6.35938 7.59687 6.35938 5.12187C6.35938 2.64687 8.42188 0.618744 11 0.618744C13.5781 0.618744 15.6406 2.64687 15.6406 5.12187C15.6406 7.59687 13.5781 9.62499 11 9.62499ZM11 2.16562C9.28125 2.16562 7.90625 3.50624 7.90625 5.12187C7.90625 6.73749 9.28125 8.07812 11 8.07812C12.7188 8.07812 14.0938 6.73749 14.0938 5.12187C14.0938 3.50624 12.7188 2.16562 11 2.16562Z"/>
                         <path d="M18.2531 21.4156C17.8406 21.4156 17.4625 21.0719 17.4625 20.625V19.6281C17.4625 16.0531 14.575 13.1656 11 13.1656C7.42499 13.1656 4.53749 16.0531 4.53749 19.6281V20.625C4.53749 21.0375 4.19374 21.4156 3.74686 21.4156C3.29999 21.4156 2.95624 21.0719 2.95624 20.625V19.6281C2.95624 15.1937 6.56561 11.6187 10.9656 11.6187C15.3656 11.6187 18.975 15.2281 18.975 19.6281V20.625C19.0094 21.0375 18.6656 21.4156 18.2531 21.4156Z"/>
@@ -84,18 +105,18 @@ const SearchBar:React.FC = () => {
                     </div>
                     <div className='relative z-20'>
                     <div className='flex max-w-[200px] justify-end'>
-                        <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white" onClick={()=>handleAccount()}>
+                        <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-primary-500 text-dark dark:text-white" onClick={()=>handleAccount()}>
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">
                             <path d="M11 20.2812C10.5531 20.2812 10.1062 20.1094 9.7625 19.8C8.97187 19.1125 8.24999 18.4937 7.59687 17.9438C5.63749 16.2594 3.91874 14.85 2.71562 13.4062C1.30624 11.6875 0.618744 10.0719 0.618744 8.25C0.618744 6.49687 1.23749 4.84688 2.33749 3.64375C3.47187 2.40625 5.05312 1.71875 6.73749 1.71875C8.00937 1.71875 9.21249 2.13125 10.2437 2.92188C10.5187 3.12812 10.7594 3.33438 11 3.60938C11.2406 3.36875 11.4812 3.12812 11.7562 2.92188C12.7875 2.13125 13.9562 1.71875 15.2625 1.71875C16.9812 1.71875 18.5281 2.40625 19.6625 3.64375C20.7969 4.84688 21.3812 6.49687 21.3812 8.25C21.3812 10.0719 20.7281 11.6875 19.2844 13.4062C18.0812 14.85 16.3625 16.2937 14.4031 17.9438C13.75 18.4937 12.9937 19.1469 12.2031 19.8C11.8937 20.1094 11.4469 20.2812 11 20.2812ZM6.73749 3.26562C5.46562 3.26562 4.29687 3.78125 3.43749 4.675C2.61249 5.60313 2.16562 6.875 2.16562 8.25C2.16562 9.65938 2.71562 11 3.88437 12.4094C5.01874 13.75 6.66874 15.1594 8.55937 16.775C9.21249 17.325 9.96874 17.9781 10.7594 18.6656C10.8969 18.7687 11.1031 18.7687 11.2406 18.6656C12.0312 17.9781 12.7875 17.3594 13.4406 16.775C15.3656 15.125 17.0156 13.75 18.1156 12.4094C19.2844 11 19.8344 9.65938 19.8344 8.25C19.8344 6.875 19.3531 5.60312 18.5281 4.70937C17.6687 3.78125 16.5 3.26562 15.2625 3.26562C14.3344 3.26562 13.475 3.575 12.7187 4.125C12.4094 4.36562 12.1344 4.64062 11.8594 4.95C11.6531 5.19062 11.3437 5.3625 11 5.3625C10.6562 5.3625 10.3812 5.225 10.1406 4.95C9.86562 4.64062 9.59062 4.36562 9.28125 4.125C8.55937 3.575 7.7 3.26562 6.73749 3.26562Z"/>
                         </svg>
 
-                            <span className="absolute -top-1 -right-1 h-[18px] w-[18px] rounded-full bg-primary leading-[18px] text-[10px] font-semibold text-white">
+                            <span className="absolute -top-1 -right-1 h-[18px] w-[18px] rounded-full bg-primary-200 leading-[18px] text-[10px] font-semibold text-white">
                             3
                             </span>
                         </button>
                     </div>
                     <div className={twMerge("absolute top-full right-0 mt-5 w-[330px]",account?"":"hidden")}>
-                        <div className="px-6 py-8 overflow-hidden bg-white border rounded-lg border-stroke dark:border-dark-3 dark:bg-dark-2 shadow-1 dark:shadow-box-dark">
+                        <div className="px-6 py-8 overflow-hidden border rounded-lg border-stroke border-dark-3 bg-white shadow-1 dark:shadow-box-dark">
                         <div className="pb-3 border-b border-stroke dark:border-dark-3">
                             <div className="flex items-center justify-between pb-4 -mx-1">
                             <div className="flex items-center px-1">
@@ -175,7 +196,7 @@ const SearchBar:React.FC = () => {
                     </div>
                     <div className="relative z-20">
                     <div className="flex max-w-[200px] justify-end">
-                        <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-gray-2 dark:bg-dark-2 text-dark dark:text-white" onClick = {()=>handleCartList()}>
+                        <button className="relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-[.5px] border-stroke dark:border-dark-3 bg-primary-500 dark:bg-dark-2 text-dark dark:text-white" onClick = {()=>handleCartList()}>
                         <svg
                             width="22"
                             height="22"
@@ -190,130 +211,19 @@ const SearchBar:React.FC = () => {
                         </svg>
 
                         <span
-                            className="absolute -top-1 -right-1 h-[18px] w-[18px] rounded-full bg-primary leading-[18px] text-[10px] font-semibold text-white"
+                            className="absolute -top-1 -right-1 h-[18px] w-[18px] rounded-full bg-primary-200 leading-[18px] text-[10px] font-semibold text-white"
                         >
-                            1
+                            {cartItems.length}
                         </span>
                         </button>
                     </div>
                     <div className={twMerge("absolute top-full right-0 mt-5 w-[330px]",cartList?"":"hidden")}>
-                        <div className="p-8 overflow-hidden bg-white rounded-lg dark:bg-dark-2 shadow-1 dark:shadow-box-dark">
-                        <div className="pb-3 mb-5 border-b border-stroke dark:border-dark-3">
-                            <div className="flex items-center justify-between pb-4 -mx-1">
-                            <div className="flex items-center px-1">
-                                <div className="mr-3 h-10 w-full max-w-[40px] overflow-hidden rounded">
-                                <img src="https://i.imgur.com/axsyGpD.jpeg" alt="product image" className="w-full"/>
-                                </div>
-                                <div>
-                                <a
-                                    href="javascript:void(0)"
-                                    className="text-sm font-medium text-dark dark:text-white hover:text-primary"
-                                >
-                                    Circular Sienna
-                                </a>
-                                <p
-                                    className="text-xs font-medium truncate text-body-color dark:text-dark-6"
-                                >
-                                    Awesome white shirt
-                                </p>
-                                </div>
-                            </div>
-                            <div className="px-1">
-                                <p
-                                className="text-base font-semibold text-dark dark:text-white"
-                                >
-                                $36.00
-                                </p>
-                            </div>
-                            </div>
-                            <div className="flex items-center justify-between py-4 -mx-1">
-                            <div className="flex items-center px-1">
-                                <div
-                                className="mr-3 h-10 w-full max-w-[40px] overflow-hidden rounded"
-                                >
-                                <img
-                                    src="https://i.imgur.com/9DqEOV5.jpeg"
-                                    alt="product image"
-                                    className="w-full"
-                                />
-                                </div>
-                                <div>
-                                <a
-                                    href="javascript:void(0)"
-                                    className="text-sm font-medium text-dark dark:text-white hover:text-primary"
-                                >
-                                    Black T-shirt
-                                </a>
-                                <p
-                                    className="text-xs font-medium truncate text-body-color dark:text-dark-6"
-                                >
-                                    It's a nice black t-shirt
-                                </p>
-                                </div>
-                            </div>
-                            <div className="px-1">
-                                <p className="text-base font-semibold text-dark dark:text-white">
-                                $36.00
-                                </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div className="pb-5 -mx-1 border-b border-stroke dark:border-dark-3">
-                            <div className="flex items-center justify-between mb-3">
-                            <div className="px-1">
-                                <p className="text-base text-dark dark:text-white">
-                                Subtotal
-                                </p>
-                            </div>
-                            <div className="px-1">
-                                <p className="text-base font-medium text-dark dark:text-white">
-                                $108
-                                </p>
-                            </div>
-                            </div>
-                            <div className="flex items-center justify-between mb-3">
-                            <div className="px-1">
-                                <p className="text-base text-dark dark:text-white">
-                                Shipping Cost (+)
-                                </p>
-                            </div>
-                            <div className="px-1">
-                                <p className="text-base font-medium text-dark dark:text-white">
-                                $10.85
-                                </p>
-                            </div>
-                            </div>
-                            <div className="flex items-center justify-between">
-                            <div className="px-1">
-                                <p className="text-base text-dark dark:text-white">
-                                Discount (-)
-                                </p>
-                            </div>
-                            <div className="px-1">
-                                <p className="text-base font-medium text-dark dark:text-white">
-                                $9.00
-                                </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-5 pb-6 -mx-1">
-                            <div className="px-1">
-                            <p className="text-base text-dark dark:text-white">
-                                Total Payable
-                            </p>
-                            </div>
-                            <div className="px-1">
-                            <p className="text-base font-medium text-dark dark:text-white">
-                                $88.15
-                            </p>
-                            </div>
-                        </div>
-                        <div>
-                            <button className="flex w-full items-center justify-center rounded-md bg-primary-600 py-[13px] px-10 text-center text-base font-medium text-white hover:bg-primary-900">
-                            Place Order
-                            </button>
-                        </div>
-                        </div>
+                        <CartList 
+                            cartItems={cartItems}
+                            updateQuantity={updateQuantity}
+                            removeFromCart={removeFromCart}
+                            calculateTotal={calculateTotal}
+                        />
                     </div>
                     </div>
                 </div>
