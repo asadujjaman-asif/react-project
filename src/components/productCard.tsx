@@ -7,7 +7,6 @@ interface Props {
 }
 
 const ProductCard: React.FC<Props> =({product,onAddToCart})=>{
-   console.log(`ProductCard: ${product.id} rendered`);
     return (
         <div key = {product.id} className='bg-gray-100 p-5 rounded-lg'>
             <img src={product.images[0]!=""?product.images[0]:product.images[1]} className="w-full h-40 object-cover" alt={product.title} />

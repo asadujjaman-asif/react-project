@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import React, { Suspense, use, useCallback } from 'react'
+import React, { Suspense, use, useCallback,useMemo  } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -52,19 +52,21 @@ const BasicFetching = () => {
   placeholderData: keepPreviousData,
  });
 
- 
- const productsFilter = products?.filter((product)=>{
-    //console.log("Product filters");
+ /*
+const productsFilter = products?.filter((product,index)=>{
+    console.log("Product filters=>"+index);
    return  product.title.toLowerCase().includes(searchKeyword.toLowerCase())
-  });
-  /*
+  });*/
+   let index=0;
   const productsFilter =useMemo(()=>{
-  console.log("Product filters");
+    if(index==0){
+      console.log("Product filters=>"+ index++);
+    }
     return  products?.filter((product)=>
      product.title.toLowerCase().includes(searchKeyword.toLowerCase())
   );
  },[products, searchKeyword]);
- */
+ 
   const addToCart = useCallback((product:Product)=>{
     setCartItems((prevItems)=>{
         const existedItem = prevItems.find((item)=>item.id===product.id);
