@@ -1,33 +1,24 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Input from './components/input';
+import Textarea from './components/textarea';
+import Button from './components/button';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="h-screen w-full flex items-center flex-col pt-32">
+        <h1 className="font-bold text-xl">Higher Order Component patterns</h1>
+        <div className='mt-4 max-w-lg space-y-4'>
+          <Input type="text" placeholder='Enter your name' />
+          <Input type="email" placeholder='Enter your Email Address' />
+          <Input type="password" placeholder='Enter your password' />
+          <Input type="password" placeholder='Enter your confirm password' />
+          <Textarea placeholder='Enter your message' />
+          <Button>Submit</Button>
+        </div>
       </div>
-      <h1 className="">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="text-primary-500 bg-slate-900 py-2 px-2">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
