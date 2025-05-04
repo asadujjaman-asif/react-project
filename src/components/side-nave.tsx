@@ -3,13 +3,15 @@ import { CiVirus,CiUser,CiShoppingCart,CiDeliveryTruck,CiCircleList,CiDatabase,C
 import { IconType } from "react-icons/lib";
 import SidebarContext from "../../contexts/sidebar-context";
 import MenuContext from "../../contexts/menu-context";
+import {Link} from 'react-router';
 type sideBarItemsProps = {
     name: string,
     icon?: IconType,
     isActive?: boolean,
     isCollapsed?: boolean,
+    href?: string,
 };
-export default function sideBarItems({name,icon}:sideBarItemsProps){
+export default function sideBarItems({name,icon,href}:sideBarItemsProps){
 
     const context = useContext(SidebarContext);
     const isCollapsed = context?.isCollapsed;
@@ -23,12 +25,12 @@ export default function sideBarItems({name,icon}:sideBarItemsProps){
     if(icon){
         return (
             <li className={`group hover:text-primary-500 ${!isCollapsed?"data-[active=true]:bg-primary-50":""} data-[active=true]:text-primary-500 cursor-pointer p-1 rounded-full transition-colors duration-150 `}  data-active={isActive}>
-                <a href="#" onClick={()=>manageSidebar(name)}  className="flex gap-2 items-center text-sm ">
+                <Link to={href} onClick={()=>manageSidebar(name)}  className="flex gap-2 items-center text-sm ">
                     <span className="h-5 w-5 flex-shrink-0 group-data-[active=true]:bg-primary-500 flex items-center justify-center rounded-full group-data-[active=true]:text-white">
-                    {icon}
+                    {React.createElement(icon)}
                     </span>
                     {!isCollapsed && <span>{name}</span>}
-                </a>
+                </Link>
             </li>
         );
     }

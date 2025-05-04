@@ -29,6 +29,7 @@ const Sidebar = (props: SidebarProps) => {
                                 name={item.name}
                                 icon={item.icon}
                                 isActive={item.isActive}
+                                href={item.href}
                             />
                         ))
                     }

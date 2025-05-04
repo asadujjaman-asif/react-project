@@ -15,7 +15,7 @@ const placeHolerColor = {
     height: '400px',
 };
 
-const Header:FC<HeaderProps> = ()=>{
+const Header:FC = ()=>{
    const theme = useContext(ThemeContext)?.theme;
    
     return (
