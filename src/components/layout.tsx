@@ -8,6 +8,8 @@ import SidebarContext from '../../contexts/sidebar-context'
 import ThemeContext from '../../contexts/theme-context'
 import MenuContext from '../../contexts/menu-context'
 import { Outlet } from 'react-router'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 function Layout() {
   const [count, setCount] = useState(0)
   const [isCollapsed,setIsCollapsed]= useState(false);
@@ -27,7 +29,9 @@ function Layout() {
             <div className={`flex-1 ${theme=="light"?" bg-gray-100  text-slate-800":" bg-gray-800 text-slate-100"} ms-0`}>
               <Header />
                 <main className='p-8 h-[calc(100vh-4rem)] '>
-                  <Outlet />
+                  <QueryClientProvider client={queryClient}>
+                    <Outlet />
+                  </QueryClientProvider>
                 </main>
             </div>
             </MenuContext.Provider>
