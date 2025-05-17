@@ -21,6 +21,9 @@ export default {
           950: "#2a1c4a",
         },
       },
+      fontFamily:{
+        lato:['Lato', 'sans-serif'],
+      }
     },
   },
   plugins: [],
