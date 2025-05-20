@@ -54,3 +54,21 @@
 .full{
   border:1px solid #d1d5db
 }
+.custom-swiper .swiper-wrapper {
+  justify-content: center;
+}
+/* Make bullets look like dashes */
+.swiper-pagination-bullet {
+  width: 16px !important;;           /* Make it wide like a dash */
+  height: 4px !important;;           /* Short height */
+  border-radius: 0 !important;;      /* Remove roundness */
+  background-color: white !important; /* Set your preferred color */
+  opacity: 0.3 !important;          /* Optional: default opacity */
+  transition: opacity 0.3s !important;
+}
+
+/* Active dash style */
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: #000; /* You can change to a different color if desired */
+}

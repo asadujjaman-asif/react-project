@@ -84,7 +84,7 @@ import { LuTextSearch } from "react-icons/lu";
                     </div>
                 </aside>
                 <main className='flex-1 overflow-y-auto'>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 p-4'>
                         <div className='rounded-md shadow-md border bg-white'>
                             <div className='h-auto overflow-x-hidden'>
                                 <img src="https://i.imgur.com/cSytoSD.jpeg" className='rounded-tr-md rounded-tl-md' alt="product image"/>
@@ -271,11 +271,123 @@ import { LuTextSearch } from "react-icons/lu";
                                 <img src='https://i.imgur.com/qNOjJje.jpeg' className='rounded-md' alt=""/>
                             </div>
                             <div className=''>
-                                <p className='font-lato font-bold text-sm'>Futuristic Holographic...</p>
+                                <p className='font-lato font-bold text-xs'>Futuristic Holographic...</p>
                                 <div className="flex gap-2 mt-1 font-lato">
-                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span> <strike>$30</strike>
+                                    <p className="font-bold p-2 text-xs gap-1"><span>$25</span> <strike>$30</strike>
                                        
                                     </p>
+                                    <a
+                                        href="#"
+                                        className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
+                                    >
+                                        <RxExternalLink size={14} />
+                                    </a>
+                                    <button className="bg-blue-400 hover:bg-blue-500 p-2 text-white rounded-md flex gap-2 items-center font-bold">
+                                        <BsCart3 /> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex py-1'>
+                            <div className='w-16 full rounded-md mr-1'>
+                                <img src='https://i.imgur.com/hKcMNJs.jpeg' className='rounded-md' alt=""/>
+                            </div>
+                            <div className=''>
+                                <p className='font-lato font-bold text-xs'>Vibrant Runners: Bold ...</p>
+                                <div className="flex gap-2 mt-1 font-lato">
+                                    <p className="font-bold p-2 text-xs gap-1"><span>$25</span> <strike>$30</strike>
+                                       
+                                    </p>
+                                    <a
+                                        href="#"
+                                        className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
+                                    >
+                                        <RxExternalLink size={14} />
+                                    </a>
+                                    <button className="bg-blue-400 hover:bg-blue-500 p-2 text-white rounded-md flex gap-2 items-center font-bold">
+                                        <BsCart3 /> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex py-1'>
+                            <div className='w-16 full rounded-md mr-1'>
+                                <img src='https://i.imgur.com/mcW42Gi.jpeg' className='rounded-md' alt=""/>
+                            </div>
+                            <div className=''>
+                                <p className='font-lato font-bold text-xs'>Futuristic Holographic...</p>
+                                <div className="flex gap-2 mt-1 font-lato">
+                                    <p className="font-bold p-2 text-xs gap-1"><span>$25</span> <strike>$30</strike>
+                                       
+                                    </p>
+                                    <a
+                                        href="#"
+                                        className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
+                                    >
+                                        <RxExternalLink size={14} />
+                                    </a>
+                                    <button className="bg-blue-400 hover:bg-blue-500 p-2 text-white rounded-md flex gap-2 items-center font-bold">
+                                        <BsCart3 /> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex py-1'>
+                            <div className='w-16 full rounded-md mr-1'>
+                                <img src='https://i.imgur.com/sC0ztOB.jpeg' className='rounded-md' alt=""/>
+                            </div>
+                            <div className=''>
+                                <p className='font-lato font-bold text-xs'>Classic Blue Suede...</p>
+                                <div className="flex gap-2 mt-1 font-lato">
+                                    <p className="font-bold p-2 text-xs gap-1"><span>$25</span> <strike>$30</strike>
+                                       
+                                    </p>
+                                    <a
+                                        href="#"
+                                        className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
+                                    >
+                                        <RxExternalLink size={14} />
+                                    </a>
+                                    <button className="bg-blue-400 hover:bg-blue-500 p-2 text-white rounded-md flex gap-2 items-center font-bold">
+                                        <BsCart3 /> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex py-1'>
+                            <div className='w-16 full rounded-md mr-1'>
+                                <img src='https://i.imgur.com/KeqG6r4.jpeg' className='rounded-md' alt=""/>
+                            </div>
+                            <div className=''>
+                                <p className='font-lato font-bold text-xs'>Classic Black...</p>
+                                <div className="flex gap-2 mt-1 font-lato">
+                                    <p className="font-bold p-2 text-xs gap-1"><span>$25</span> <strike>$30</strike>
+                                       
+                                    </p>
+                                    <a
+                                        href="#"
+                                        className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
+                                    >
+                                        <RxExternalLink size={14} />
+                                    </a>
+                                    <button className="bg-blue-400 hover:bg-blue-500 p-2 text-white rounded-md flex gap-2 items-center font-bold">
+                                        <BsCart3 /> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="">See more</a>
+                    </div>
+                    <div className='py-2'>
+                        <p className='font-lato font-bold'>Best Sale:</p>
+                        <div className='flex py-1'>
+                            <div className='w-16 full rounded-md mr-1'>
+                                <img src='https://i.imgur.com/qNOjJje.jpeg' className='rounded-md' alt=""/>
+                            </div>
+                            <div className=''>
+                                <p className='font-lato font-bold text-xs'>Futuristic Holographic...</p>
+                                <div className="flex gap-2 mt-1 font-lato">
+                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span></p>
                                     <a
                                         href="#"
                                         className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
@@ -293,11 +405,9 @@ import { LuTextSearch } from "react-icons/lu";
                                 <img src='https://i.imgur.com/hKcMNJs.jpeg' className='rounded-md' alt=""/>
                             </div>
                             <div className=''>
-                                <p className='font-lato font-bold text-sm'>Vibrant Runners: Bold ...</p>
+                                <p className='font-lato font-bold text-xs'>Vibrant Runners: Bold ...</p>
                                 <div className="flex gap-2 mt-1 font-lato">
-                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span> <strike>$30</strike>
-                                       
-                                    </p>
+                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span></p>
                                     <a
                                         href="#"
                                         className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
@@ -315,11 +425,9 @@ import { LuTextSearch } from "react-icons/lu";
                                 <img src='https://i.imgur.com/mcW42Gi.jpeg' className='rounded-md' alt=""/>
                             </div>
                             <div className=''>
-                                <p className='font-lato font-bold text-sm'>Futuristic Holographic...</p>
+                                <p className='font-lato font-bold text-xs'>Futuristic Holographic...</p>
                                 <div className="flex gap-2 mt-1 font-lato">
-                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span> <strike>$30</strike>
-                                       
-                                    </p>
+                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span></p>
                                     <a
                                         href="#"
                                         className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
@@ -337,11 +445,9 @@ import { LuTextSearch } from "react-icons/lu";
                                 <img src='https://i.imgur.com/sC0ztOB.jpeg' className='rounded-md' alt=""/>
                             </div>
                             <div className=''>
-                                <p className='font-lato font-bold text-sm'>Classic Blue Suede...</p>
+                                <p className='font-lato font-bold text-xs'>Classic Blue Suede...</p>
                                 <div className="flex gap-2 mt-1 font-lato">
-                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span> <strike>$30</strike>
-                                       
-                                    </p>
+                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span></p>
                                     <a
                                         href="#"
                                         className="bg-gray-400 hover:bg-gray-500 flex text-center text-white rounded-md py-1 px-2"
@@ -359,9 +465,9 @@ import { LuTextSearch } from "react-icons/lu";
                                 <img src='https://i.imgur.com/KeqG6r4.jpeg' className='rounded-md' alt=""/>
                             </div>
                             <div className=''>
-                                <p className='font-lato font-bold text-sm'>Classic Black...</p>
+                                <p className='font-lato font-bold text-xs'>Classic Black...</p>
                                 <div className="flex gap-2 mt-1 font-lato">
-                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span> <strike>$30</strike>
+                                    <p className="font-bold p-2 text-sm gap-1"><span>$25</span>
                                        
                                     </p>
                                     <a
@@ -376,6 +482,7 @@ import { LuTextSearch } from "react-icons/lu";
                                 </div>
                             </div>
                         </div>
+                        <a href="">See more</a>
                     </div>
                 </aside>
             </div>
