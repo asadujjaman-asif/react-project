@@ -1,9 +1,9 @@
 import React,{ useState } from 'react'
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux'
-import Main from './components/products/main'
-import ShoppingCart from './components/products/shopping-cart'
-import Home from './components/products/home'
+import Main from './components/pages/product'
+import ShoppingCart from './components/pages/shopping-cart'
+import Home from './components/pages/home'
 
 import {RootState} from "./store"
 function App() {

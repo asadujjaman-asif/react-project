@@ -62,7 +62,7 @@
   width: 16px !important;;           /* Make it wide like a dash */
   height: 4px !important;;           /* Short height */
   border-radius: 0 !important;;      /* Remove roundness */
-  background-color: white !important; /* Set your preferred color */
+  background-color: rgb(116, 9, 9) !important; /* Set your preferred color */
   opacity: 0.3 !important;          /* Optional: default opacity */
   transition: opacity 0.3s !important;
 }
